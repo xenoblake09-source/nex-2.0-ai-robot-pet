@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360">
+  <rect width="720" height="360" fill="#000000"/>
+  
+  <g transform="translate(30 60)">
+    <defs>
+      <radialGradient id="halo-l" cx="50%" cy="50%" r="50%">
+        <stop offset="45%" stop-color="rgb(107,255,184)" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="rgb(107,255,184)" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="shade-l" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+        <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#0b1b2a" stop-opacity="0.22"/>
+      </linearGradient>
+      <clipPath id="clip-l">
+        <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z"/>
+      </clipPath>
+    </defs>
+    <g transform="translate(0.00 0.00) rotate(0.00 120 120) translate(120 120) scale(1.000) translate(-120 -120)">
+      <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z" fill="none" stroke="rgb(107,255,184)"
+         stroke-opacity="0.425" stroke-width="9"
+         transform="translate(120 120) scale(1.14) translate(-120 -120)"/>
+      <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z" fill="rgb(240,250,255)" stroke="rgb(107,255,184)"
+            stroke-opacity="0.562" stroke-width="2.2" stroke-linejoin="round"/>
+      
+      <g clip-path="url(#clip-l)">
+        <path d="M 156.82 120.00 L 156.37 125.76 L 155.02 131.38 L 152.81 136.72 L 149.79 141.65 L 146.04 146.04 L 141.65 149.79 L 136.72 152.81 L 131.38 155.02 L 125.76 156.37 L 120.00 156.82 L 114.24 156.37 L 108.62 155.02 L 103.28 152.81 L 98.35 149.79 L 93.96 146.04 L 90.21 141.65 L 87.19 136.72 L 84.98 131.38 L 83.63 125.76 L 83.18 120.00 L 83.63 114.24 L 84.98 108.62 L 87.19 103.28 L 90.21 98.35 L 93.96 93.96 L 98.35 90.21 L 103.28 87.19 L 108.62 84.98 L 114.24 83.63 L 120.00 83.18 L 125.76 83.63 L 131.38 84.98 L 136.72 87.19 L 141.65 90.21 L 146.04 93.96 L 149.79 98.35 L 152.81 103.28 L 155.02 108.62 L 156.37 114.24 Z" fill="rgb(11,27,42)" opacity="1.000"/>
+        <path d="M 120.00 159.18 C 66.38 113.81 89.07 70.51 120.00 101.44 C 150.93 70.51 173.62 113.81 120.00 159.18 Z" fill="#FF2E74" opacity="0.000"/>
+        <circle cx="107.48" cy="106.01"
+                r="8.10" fill="#ffffff" opacity="1.000"/>
+        <circle cx="132.52" cy="133.99"
+                r="4.42" fill="#ffffff" opacity="0.700"/>
+        <path d="M 75.36 168.80 C 80.61 178.25 79.21 182.80 75.36 182.80 C 71.51 182.80 70.11 178.25 75.36 168.80 Z" fill="#7FD8FF" opacity="0.000"/>
+      </g>
+    </g>
+  </g>
+  
+  <g transform="translate(450 60)">
+    <defs>
+      <radialGradient id="halo-r" cx="50%" cy="50%" r="50%">
+        <stop offset="45%" stop-color="rgb(107,255,184)" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="rgb(107,255,184)" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="shade-r" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+        <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#0b1b2a" stop-opacity="0.22"/>
+      </linearGradient>
+      <clipPath id="clip-r">
+        <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z"/>
+      </clipPath>
+    </defs>
+    <g transform="translate(0.00 0.00) rotate(0.00 120 120) translate(120 120) scale(1.000) translate(-120 -120)">
+      <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z" fill="none" stroke="rgb(107,255,184)"
+         stroke-opacity="0.425" stroke-width="9"
+         transform="translate(120 120) scale(1.14) translate(-120 -120)"/>
+      <path d="M 83.00 28.86 L 157.00 28.86 Q 213.00 28.86 213.00 84.86 L 213.00 147.70 Q 213.00 203.70 157.00 203.70 L 83.00 203.70 Q 27.00 203.70 27.00 147.70 L 27.00 84.86 Q 27.00 28.86 83.00 28.86 Z" fill="rgb(240,250,255)" stroke="rgb(107,255,184)"
+            stroke-opacity="0.562" stroke-width="2.2" stroke-linejoin="round"/>
+      
+      <g clip-path="url(#clip-r)">
+        <path d="M 156.82 120.00 L 156.37 125.76 L 155.02 131.38 L 152.81 136.72 L 149.79 141.65 L 146.04 146.04 L 141.65 149.79 L 136.72 152.81 L 131.38 155.02 L 125.76 156.37 L 120.00 156.82 L 114.24 156.37 L 108.62 155.02 L 103.28 152.81 L 98.35 149.79 L 93.96 146.04 L 90.21 141.65 L 87.19 136.72 L 84.98 131.38 L 83.63 125.76 L 83.18 120.00 L 83.63 114.24 L 84.98 108.62 L 87.19 103.28 L 90.21 98.35 L 93.96 93.96 L 98.35 90.21 L 103.28 87.19 L 108.62 84.98 L 114.24 83.63 L 120.00 83.18 L 125.76 83.63 L 131.38 84.98 L 136.72 87.19 L 141.65 90.21 L 146.04 93.96 L 149.79 98.35 L 152.81 103.28 L 155.02 108.62 L 156.37 114.24 Z" fill="rgb(11,27,42)" opacity="1.000"/>
+        <path d="M 120.00 159.18 C 66.38 113.81 89.07 70.51 120.00 101.44 C 150.93 70.51 173.62 113.81 120.00 159.18 Z" fill="#FF2E74" opacity="0.000"/>
+        <circle cx="107.48" cy="106.01"
+                r="8.10" fill="#ffffff" opacity="1.000"/>
+        <circle cx="132.52" cy="133.99"
+                r="4.42" fill="#ffffff" opacity="0.700"/>
+        <path d="M 75.36 168.80 C 80.61 178.25 79.21 182.80 75.36 182.80 C 71.51 182.80 70.11 178.25 75.36 168.80 Z" fill="#7FD8FF" opacity="0.000"/>
+      </g>
+    </g>
+  </g>
+</svg>
