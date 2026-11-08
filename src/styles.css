@@ -1,0 +1,220 @@
+/* NEX — pure black stage, two expressive eyes, nothing else. */
+
+:root {
+  --nex-bg: #000000;
+  --nex-cyan: #3fd8ff;
+  --nex-panel: rgba(10, 16, 24, 0.94);
+  --nex-text: #dbeafe;
+  --nex-muted: #7b8ea3;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--nex-bg);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  color: var(--nex-text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nex-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--nex-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.nex-eyes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 6vw, 56px);
+  width: 100%;
+  padding: 0 4vw;
+}
+
+.nex-eye {
+  width: clamp(112px, 33vw, 190px);
+  height: auto;
+  display: block;
+  overflow: visible;
+  will-change: transform;
+}
+
+/* ---- setup panel (hidden by default) ---------------------------------- */
+
+.nex-panel-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
+
+.nex-panel {
+  width: min(460px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--nex-panel);
+  border: 1px solid rgba(63, 216, 255, 0.22);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
+}
+
+.nex-panel h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nex-cyan);
+}
+
+.nex-field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.nex-field span {
+  display: block;
+  font-size: 12px;
+  color: var(--nex-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.nex-field input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--nex-text);
+  font-size: 14px;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.nex-field input:focus {
+  border-color: rgba(63, 216, 255, 0.6);
+}
+
+.nex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.nex-button {
+  flex: 1 1 auto;
+  min-width: 110px;
+  padding: 11px 14px;
+  border-radius: 11px;
+  border: none;
+  background: var(--nex-cyan);
+  color: #00202e;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nex-button.ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--nex-text);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nex-button:disabled {
+  opacity: 0.55;
+}
+
+.nex-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.nex-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--nex-text);
+}
+
+.nex-toggle input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--nex-cyan);
+}
+
+.nex-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--nex-muted);
+  margin-bottom: 10px;
+}
+
+.nex-status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.nex-status .dot.ok {
+  background: #45e08a;
+  box-shadow: 0 0 8px #45e08a;
+}
+
+.nex-status .dot.bad {
+  background: #ff5a5a;
+  box-shadow: 0 0 8px #ff5a5a;
+}
+
+.nex-message {
+  font-size: 12px;
+  color: var(--nex-muted);
+  margin-bottom: 12px;
+}
+
+.nex-message.error {
+  color: #ff9d9d;
+}
+
+.nex-hint {
+  font-size: 11px;
+  color: rgba(123, 142, 163, 0.75);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
