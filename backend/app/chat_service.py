@@ -256,7 +256,15 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
     if not message:
         raise GeminiError("Empty message.")
 
-    # --- Learn the user's name -------------------------------------------
+    # --- Detect the language of the user's message ------------------------
+    detected_lang = P.detect_language(message)
+    if request.language and request.language != "auto":
+        # The client already knows the language (e.g. from TTS settings).
+        effective_lang = request.language.lower()
+    else:
+        effective_lang = detected_lang
+
+    # --- Learn the user's name ---------------------------------------------
     learned_name = _extract_name(message)
     if learned_name and not request.user_name:
         session.set_fact("user_name", learned_name)
@@ -268,12 +276,15 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
     timezone = _local_timezone(request.local_time, request.device_timezone)
     now = _server_now(timezone)
 
-    # --- Intent detection ------------------------------------------------
+    # --- Intent detection ---------------------------------------------------
     creator_intent = P.detect_creator_intent(message)
     animal = P.detect_animal_intent(message)
     dance_intent = P.detect_dance_intent(message)
     time_intent = P.detect_time_intent(message)
     date_intent = P.detect_date_intent(message)
+    expression_intent = P.detect_expression_intent(message)
+    sleep_action = P.detect_sleep_action(message)
+    wake_action = P.detect_wake_action(message)
     school_intent = P.looks_like_school_question(message)
     weather_intent = bool(
         re.search(
@@ -283,7 +294,7 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
         )
     )
 
-    # --- Live facts ------------------------------------------------------
+    # --- Live facts ----------------------------------------------------------
     school_facts: str | None = None
     school_used = False
     if school_intent:
@@ -314,9 +325,7 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
                 "you could not check the weather right now."
             )
 
-    language_hint = (
-        request.language if request.language and request.language != "auto" else "auto-detect"
-    )
+    language_hint = effective_lang
 
     system_prompt = build_system_prompt(
         timezone=timezone,
@@ -327,9 +336,34 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
         language_hint=language_hint,
     )
 
-    # --- Conversation contents -------------------------------------------
-    contents: list[types.Content] = []
+    # --- Conversation contents ----------------------------------------------
+    # Merge client-provided history with server-side session history.
+    # Client history is the primary source (preserves context across Render
+    # restarts). We deduplicate messages that appear in both to avoid
+    # sending the same turn twice to Gemini.
+    merged_turns: list[dict[str, str]] = []
+    seen: set[str] = set()
+
+    # Start with client-provided history (if any).
+    if request.history:
+        for turn in request.history:
+            key = f"{turn.role}:{turn.content[:80]}"
+            if key not in seen:
+                seen.add(key)
+                merged_turns.append({"role": turn.role, "content": turn.content})
+
+    # Add server-side history that isn't already in the client history.
     for turn in history_window(session):
+        key = f"{turn['role']}:{turn['content'][:80]}"
+        if key not in seen:
+            seen.add(key)
+            merged_turns.append(turn)
+
+    # Keep within safe size limits (max 16 turns = 8 exchanges).
+    merged_turns = merged_turns[-16:]
+
+    contents: list[types.Content] = []
+    for turn in merged_turns:
         role = "model" if turn["role"] == "nex" else "user"
         contents.append(types.Content(role=role, parts=[types.Part(text=turn["content"])]))
     contents.append(types.Content(role="user", parts=[types.Part(text=message)]))
@@ -360,12 +394,23 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
     if action_type not in valid_actions:
         action_type = "none"
 
-    # --- Deterministic overrides (product rules always win) --------------
+    # --- Deterministic overrides (product rules always win) ----------------
     if creator_intent:
-        reply = P.CREATOR_LINE
+        # Use the exact mandated sentence in English. Other languages get
+        # their own canonical version. This is never rephrased by the model.
+        reply = P.get_creator_line(effective_lang)
         expression = "love"
         action_type = "none"
         action_animal = ""
+
+    # Expression commands (be happy, laugh, etc.) — route directly to the
+    # eye system without waiting for Gemini's response.
+    if expression_intent and expression_intent != "dance":
+        expression = expression_intent
+        if expression_intent == "sleep":
+            action_type = "sleep"
+        if expression_intent == "laugh" and action_type == "none":
+            action_type = "none"  # laugh is an expression, not a separate action
 
     if animal:
         action_type = "animal_sound"
@@ -381,6 +426,14 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
         action_type = "tell_time"
     elif date_intent:
         action_type = "tell_date"
+
+    # Sleep / wake actions take priority over other action types.
+    if sleep_action:
+        action_type = "sleep"
+        expression = "sleep"
+    elif wake_action:
+        action_type = "wake"
+        expression = "happy"
 
     if school_intent and action_type == "none":
         action_type = "school"
@@ -399,7 +452,9 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
             reply = f"{reply} {date_str}".strip()
 
     if not reply:
-        reply = "Hmm, my brain hiccuped for a second. Ask me again?"
+        # No silent fallback: if Gemini produced nothing usable we fail loudly
+        # instead of pretending the robot answered.
+        raise GeminiError("Gemini returned an empty reply.")
 
     session.add_turn("user", message)
     session.add_turn("nex", reply)
@@ -412,7 +467,7 @@ async def handle_chat(request: ChatRequest) -> ChatResponse:
         reply=reply,
         expression=expression,  # type: ignore[arg-type]
         action=Action(type=action_type, animal=action_animal or None),  # type: ignore[arg-type]
-        language=language,
+        language=effective_lang,
         source="gemini",
         model=model_used,
         latency_ms=latency_ms,
